@@ -112,15 +112,13 @@ keytool -importkeystore \
 cd /home/atracy/repositories/opensearch/secrets/kafka-1-creds
 mkdir client-creds
 
-
-keytool -keystore /home/training/learn-kafka-courses/fund-kafka-security/client-creds/kafka.client.truststore.pkcs12 \
+keytool -keystore /home/atracy/repositories/opensearch/secrets/kafka-1-creds/client-creds/kafka.client.truststore.pkcs12 \           
     -alias CARoot \
-    -import \
-    -file /home/training/learn-kafka-courses/fund-kafka-security/ca.crt \
+    -import \                                                  
+    -file /home/atracy/repositories/opensearch/secrets/ca.crt \
     -storepass confluent  \
     -noprompt \
     -storetype PKCS12
-
 
 # You can do validation, etc
 keytool -list -v \
@@ -128,7 +126,7 @@ keytool -list -v \
     -storepass confluent
 
 # Save the keys
-sudo tee /home/atracy/repositories/opensearch/secrets/kafka-1-creds/kafka-1_sslkey_creds << EOF >/dev/null
+sudo tee /home/atracy/repositories/opensearch/secrets/kafka-1-creds/kafka-1_ssl_key_creds << EOF >/dev/null
 confluent
 EOF
 
