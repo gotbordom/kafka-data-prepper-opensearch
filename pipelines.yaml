@@ -1,0 +1,13 @@
+kafka-pipeline:
+  source:
+    kafka:
+      bootstrap_servers:
+        - 192.168.240.1:19093
+      topics:
+        - name: test-topic
+          group_id: test-data-prepper
+      encryption:
+        trust_store_file_path: "/etc/kafka/secrets/kafka.client.truststore.pkcs12"
+        trust_store_password: "confluent"
+  sink:
+    - stdout:

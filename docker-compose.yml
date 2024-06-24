@@ -1,0 +1,65 @@
+version: "3.5"
+services:
+  zk-1:
+    image: confluentinc/cp-zookeeper:latest
+    restart: always
+    container_name: zk-1
+    hostname: zk-1
+    ports:
+      - "12181:12181"
+    volumes:
+      - data-zk-log-1:/var/lib/zookeeper/log
+      - data-zk-data-1:/var/lib/zookeeper/data
+    networks:
+      - confluent
+    environment:
+      - ZOOKEEPER_SERVER_ID=1
+      - ZOOKEEPER_CLIENT_PORT=12181
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_INIT_LIMIT=5
+      - ZOOKEEPER_SYNC_LIMIT=2
+      - ZOOKEEPER_SERVERS=zk-1:2888:3888
+  
+
+  kafka-1:
+    image: confluentinc/cp-kafka:latest
+    restart: always
+    container_name: kafka-1
+    hostname: kafka-1
+    ports:
+      - "19092:19092"
+      - "19093:19093"      
+    networks:
+      - confluent
+    volumes:
+      - data-kafka-1:/var/lib/kafka/data
+      - /home/atracy/repositories/opensearch/data-prepper-secrets:/etc/kafka/secrets
+    environment:
+      KAFKA_BROKER_ID: 101
+      KAFKA_ZOOKEEPER_CONNECT: zk-1:12181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      #KAFKA_METRIC_REPORTERS: "io.confluent.metrics.reporter.ConfluentMetricsReporter"
+      #CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: "kafka-1:9092,kafka-2:9092,kafka-3:9092"
+      #KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:19092,BROKER://0.0.0.0:9092
+      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:19092,BROKER://kafka-1:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:19092,SSL://0.0.0.0:19093,BROKER://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:19092,SSL://localhost:19093,BROKER://kafka-1:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,SSL:SSL,BROKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_SSL_KEYSTORE_FILENAME: default-keystore.p12
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: default-keystore_creds
+      KAFKA_SSL_KEY_CREDENTIALS: ssl_key_creds
+      #KAFKA_SSL_TRUSTSTORE_FILENAME: kafka.kafka-1.truststore.pkcs12
+      #KAFKA_SSL_TRUSTSTORE_CREDENTIALS: kafka-1_truststore_creds
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: "HTTPS"
+      #KAFKA_SSL_CLIENT_AUTH: "required"
+
+volumes:
+  data-zk-log-1:
+  data-zk-data-1:
+  data-kafka-1:
+
+networks:
+  confluent:
