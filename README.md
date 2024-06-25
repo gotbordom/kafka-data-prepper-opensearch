@@ -64,7 +64,7 @@ openssl req -new -nodes \
    -config /home/atracy/repositories/opensearch/secrets/ca.cnf
 
 # Create a PEM file from the above created files
-cat /home/atracy/repositories/opensearch/secrets/ca.crt /home/atracy/repositories/opensearch/secrets/ca.key > /home/training/learn-kafka-courses/fund-kafka-security/ca.pem
+cat /home/atracy/repositories/opensearch/secrets/ca.crt /home/atracy/repositories/opensearch/secrets/ca.key > /home/atracy/repositories/opensearch/secrets/ca.pem
 
 # Create the server key and auth certificate
 openssl req -new \
