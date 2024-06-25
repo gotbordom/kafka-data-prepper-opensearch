@@ -159,6 +159,11 @@ docker run --name data-prepper -p 4900:4900 \
            -v ${PWD}/data-prepper-secrets/default-keystore.p12:/usr/share/data-prepper/default-keystore.p12 \
            opensearchproject/data-prepper:latest
 
+# This attempt seemed best - mount the pipelines yaml, then mount the kafka secrets to be able to find the truststore
+docker run --name data-prepper -p 4900:4900 \
+           -v ${PWD}/pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml \
+           -v ${PWD}/secrets/kafka-1-creds/client-creds:/etc/kafka/secrets \
+           opensearchproject/data-prepper:latest
 
 
 
