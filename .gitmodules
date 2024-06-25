@@ -1,3 +1,0 @@
-[submodule "learn-kafka-courses"]
-	path = learn-kafka-courses
-	url = git@github.com:confluentinc/learn-kafka-courses.git
