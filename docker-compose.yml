@@ -32,7 +32,7 @@ services:
       - confluent
     volumes:
       - data-kafka-1:/var/lib/kafka/data
-      - /home/atracy/repositories/opensearch/secrets/kafka-1-creds:/etc/kafka/secrets
+      - ./secrets/kafka-1-creds:/etc/kafka/secrets
     environment:
       KAFKA_BROKER_ID: 101
       KAFKA_ZOOKEEPER_CONNECT: zk-1:12181
@@ -63,8 +63,8 @@ services:
     networks:
       - confluent
     volumes: 
-      - /home/atracy/repositories/opensearch/secrets/kafka-1-creds/client-creds:/etc/kafka/secrets
-      - /home/atracy/repositories/opensearch/pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml
+      - ./secrets/kafka-1-creds/client-creds:/etc/kafka/secrets
+      - ./pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml
 
 volumes:
   data-zk-log-1:
