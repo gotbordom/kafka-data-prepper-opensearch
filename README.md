@@ -4,10 +4,10 @@ This repo is intended for learning how to connect kafka to opensearch using a da
 #### Notes
 * Be aware that this was all done locally, and at this time all my paths are hard coded. So be aware that directly copying this and running the steps will not work copy and paste for you.
 * This relys on exposing the host machine's local IP addresss to docker to get around the issue of docker not correclty using localhost. For anyone else's implementation be sure to replace the following IP addresses with your own.
-** pipelines.yaml: bootstrap_server: point this to xxx.xxx.xxx.1:19093 for your hostmachine.
-** docker-compose.yml: KAFKA_ADVERTISED_LISTENERS for the ssl 
+ * pipelines.yaml: bootstrap_server: point this to xxx.xxx.xxx.1:19093 for your hostmachine.
+ * docker-compose.yml: KAFKA_ADVERTISED_LISTENERS for the ssl 
 connection, point this also the your hostmachine ip.
-** kafka-1.cnf: whatever your hostname ip is needs to be added to the alt_names of the cert configuration BEFORE creating your certs, and keystores.
+ * kafka-1.cnf: whatever your hostname ip is needs to be added to the alt_names of the cert configuration BEFORE creating your certs, and keystores.
 * For the previous step, there are ways to just have a command grab this for you. I haven't written it yet, when I do I will likey update this.
 
 #### Dependencies
